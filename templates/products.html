@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photography Equipment Store</title>
+    <!-- 
+        To be able to link style.css you need to create a subfolder in root dir with static files and reference with function "url_for" 
+        source: https://sentry.io/answers/serve-static-files-flask/
+    -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+</head>
+<body>
+    <header>
+        <h1>Photography Equipment Store</h1>
+        <h3>by @nkrvisuals</h3>
+        <br />
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="products">Products</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href=signin>Sign In</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="filters">
+            <label for="category">Category:</label>
+            <select id="category">
+                <option value="all">All</option>
+                <option value="cameras">Cameras</option>
+                <option value="lenses">Lenses</option>
+                <!-- Add more options as needed -->
+            </select>
+            
+            <label for="brand">Brand:</label>
+            <select id="brand">
+                <option value="all">All</option>
+                <option value="sony">Sony</option>
+                <option value="sigma">Sigma</option>
+                <!-- Add more options as needed -->
+            </select>
+        </div>
+         <!-- Search bar -->
+        <div class="search-bar">
+            <input type="text" placeholder="Search products...">
+            <button>Search</button>
+        </div>
+
+        <section class="products">
+            <div class="product">
+                <img src="{{url_for('static', filename='img/a7iii.jpg')}}" alt="SonyA7III">
+                <h3>Sony A7III</h3>
+                <p>Sony Camera for photoshooting</p>
+                <span class="price">$999.00</span>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+            <div class="product">
+                <img src="{{url_for('static', filename='img/sigma85.jpg')}}" alt="Sigma85mm">
+                <h3>Sigma Lens</h3>
+                <p>Sigma 85mm F1.4 Sony E-Mount</p>
+                <span class="price">$849.00</span>
+                <a href="#" class="btn">Add to Cart</a>
+            </div>
+            <!-- Add more products here -->
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy;2024 nkrvisuals. All rights reserved.</p>
+    </footer>
+</body>
+</html>

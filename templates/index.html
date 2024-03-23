@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photography Equipment Store</title>
+    <!-- 
+        To be able to link style.css you need to create a subfolder in root dir with static files and reference with function "url_for" 
+        source: https://sentry.io/answers/serve-static-files-flask/
+    -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+</head>
+<body>
+    <header>
+        <h1>Photography Equipment Store</h1>
+        <h3>by @nkrvisuals</h3>
+        <br />
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="products">Products</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href=signin>Sign In</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h2>Welcome to Our Photography Equipment Store</h2>
+            <p>Find the best gear for your photography needs.</p>
+            <a href="products" class="btn">Shop Now</a>
+        </section>
+
+        <section class="featured-products">
+            <h2>Featured Products</h2>
+            <div class="product">
+                <img src="{{url_for('static', filename='img/a7iii.jpg')}}" alt="SonyA7III">
+                <h3>Camera</h3>
+                <p>Sony A7III</p>
+                <a href="#" class="btn">View Details</a>
+            </div>
+            <div class="product">
+                <img src="{{url_for('static', filename='img/sigma85.jpg')}}" alt="Sigma85mm">
+                <h3>Lens</h3>
+                <p>Sigma 85mm F1.4</p>
+                <a href="#" class="btn">View Details</a>
+            </div>
+            <!-- Add more featured products here -->
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy;2024 nkrvisuals. All rights reserved.</p>
+    </footer>
+</body>
+</html>
