@@ -4,17 +4,40 @@ from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase
-from utils.db.model import initdb
+#from utils.db.model import initdb
+
+
+from sqlalchemy import Integer, String
+from sqlalchemy.orm import Mapped, mapped_column
+#from app import db, app
+
+
+
 
 class Base(DeclarativeBase):
   pass
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your_secret_key' 
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://reberni:asdf1234@localhost:3306/photographyequipment" # Change this to a secret key of your choice
-db = SQLAlchemy(model_class=Base)
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://reberni:asdf1234@localhost:3306/photographyequipment" # Change this to a secret key of your choice
+db = SQLAlchemy(app)
+
+
+class User(db.Model):
+    id: Mapped[int] = mapped_column(primary_key=True)
+    username: Mapped[str] = mapped_column(db.String(50),unique=True)
+    email: Mapped[str] = db.Column(db.String(120))
+
+def initdb():
+    with app.app_context():
+        db.create_all()
+
+
+
 db.init_app(app)
 initdb()
+
+
 
 
 # Define a simple sign-in form using Flask-WTF

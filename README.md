@@ -44,6 +44,11 @@ gunicorn --bind 0.0.0.0:5000 wsgi:app
 7. DB
 ```bash
 pip install flask-sqlalchemy==2.5.1
-````
+```
 
+0. Notes
+```bash
+pip install -r requirements.txt
+```
+https://note.nkmk.me/en/python-pip-install-requirements/
 
