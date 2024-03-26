@@ -56,6 +56,11 @@ nav ul li a {
     padding: 20px 0;
 }
 
+.profile-image {
+    width: 20px; /* Set the width of the image */
+    height: 20px; /* Set the height of the image */
+}
+
 .hero {
     text-align: center;
     padding: 100px 0;

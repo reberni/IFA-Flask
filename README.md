@@ -52,3 +52,11 @@ pip install -r requirements.txt
 ```
 https://note.nkmk.me/en/python-pip-install-requirements/
 
+
+Docker
+```bash
+docker build -t ifa-flask:latest .
+docker login 
+docker image tag ifa-flask:latest reberni/ifa-flask:latest
+docker push reberni/ifa-flask:latest
+```
