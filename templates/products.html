@@ -4,11 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Photography Equipment Store</title>
-    <!-- 
-        To be able to link style.css you need to create a subfolder in root dir with static files and reference with function "url_for" 
-        source: https://sentry.io/answers/serve-static-files-flask/
-    -->
-    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <header>
@@ -18,10 +14,10 @@
         <nav>
             <ul>
                 <li><a href="/">Home</a></li>
-                <li><a href="products">Products</a></li>
+                <li><a href="{{ url_for('products') }}">Products</a></li>
                 <li><a href="#">About Us</a></li>
                 <li><a href="#">Contact</a></li>
-                <li><a href=signin>Sign In</a></li>
+                <li><a href="{{ url_for('signin') }}">Sign In</a></li>
             </ul>
         </nav>
     </header>
@@ -44,28 +40,26 @@
                 <!-- Add more options as needed -->
             </select>
         </div>
-         <!-- Search bar -->
+        
+        <!-- Search bar -->
         <div class="search-bar">
             <input type="text" placeholder="Search products...">
             <button>Search</button>
         </div>
 
         <section class="products">
+            {% for product in products %}
             <div class="product">
-                <img src="{{url_for('static', filename='img/a7iii.jpg')}}" alt="SonyA7III">
-                <h3>Sony A7III</h3>
-                <p>Sony Camera for photoshooting</p>
-                <span class="price">$999.00</span>
-                <a href="#" class="btn">Add to Cart</a>
+                <img src="{{ url_for('static', filename='img/placeholder.jpg') }}" alt="{{ product.productname }}">
+                <h3>{{ product.productname }}</h3>
+                <p>{{ product.productdescription }}</p>
+                <span class="price">${{ product.productprice }}</span>
+                <p>{{ product.creator.username }}</p>
+                <a href="#" class="btn">Add to Cart</a>                                     
             </div>
-            <div class="product">
-                <img src="{{url_for('static', filename='img/sigma85.jpg')}}" alt="Sigma85mm">
-                <h3>Sigma Lens</h3>
-                <p>Sigma 85mm F1.4 Sony E-Mount</p>
-                <span class="price">$849.00</span>
-                <a href="#" class="btn">Add to Cart</a>
-            </div>
-            <!-- Add more products here -->
+            {% else %}
+            <p>No products found.</p>
+            {% endfor %}
         </section>
     </main>
 

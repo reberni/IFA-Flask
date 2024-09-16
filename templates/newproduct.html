@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Create Product</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>Create New Product</h1>
+    <form method="post" action="{{ url_for('create_product') }}">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.productname.label }}<br>
+            {{ form.productname(size=32) }}<br>
+            {% for error in form.productname.errors %}
+                <span class="error">{{ error }}</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.productdescription.label }}<br>
+            {{ form.productdescription(size=64) }}<br>
+            {% for error in form.productdescription.errors %}
+                <span class="error">{{ error }}</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.productprice.label }}<br>
+            {{ form.productprice(size=10) }}<br>
+            {% for error in form.productprice.errors %}
+                <span class="error">{{ error }}</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.productbrand.label }}<br>
+            {{ form.productbrand(size=32) }}<br>
+            {% for error in form.productbrand.errors %}
+                <span class="error">{{ error }}</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.submit() }}
+        </p>
+    </form>
+    <a href="{{ url_for('products') }}" class="btn">Back to Products</a>
+</body>
+</html>

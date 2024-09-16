@@ -5,7 +5,9 @@ body, h1, h2, h3, p, ul, li {
     margin: 0;
     padding: 0;
 }
-
+h1 {
+    text-align: center;
+}
 /* Global styles */
 body {
     font-family: Arial, sans-serif;
@@ -200,4 +202,50 @@ footer {
 
 .search-bar button:hover {
     background-color: #555;
+}
+/* Form styles */
+form {
+    max-width: 600px; /* Set a max width for the form */
+    margin: 0 auto; /* Center the form horizontally */
+    padding: 20px;
+    background-color: #fff; /* White background for the form */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+}
+
+form p {
+    margin-bottom: 15px; /* Space between form fields */
+}
+
+form label {
+    display: block; /* Make labels block elements */
+    margin-bottom: 5px; /* Space below labels */
+    font-weight: bold; /* Make labels bold */
+}
+
+form input, form textarea, form select {
+    width: 100%; /* Full width of the form container */
+    padding: 10px; /* Space inside input fields */
+    border: 1px solid #ccc; /* Border color */
+    border-radius: 5px; /* Rounded corners */
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
+
+form input[type="submit"] {
+    background-color: #333; /* Dark background for the submit button */
+    color: #fff; /* White text color */
+    border: none; /* Remove default border */
+    cursor: pointer; /* Pointer cursor on hover */
+    padding: 10px 20px; /* Padding around the text */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s ease; /* Smooth background color change on hover */
+}
+
+form input[type="submit"]:hover {
+    background-color: #555; /* Lighter background on hover */
+}
+
+form .error {
+    color: red; /* Red color for error messages */
+    font-size: 0.9em; /* Slightly smaller text for errors */
 }

@@ -4,24 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
-    <!-- Add any CSS stylesheets or external libraries here -->
     <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
 </head>
 <body>
     <header>
         <h1>User Profile</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="products">Products</a></li>
+                <li><a href="profile">Profile</a></li>
+                <li><a href="logout" class="btn">Logout</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <main>
-        <section class="profile">
+    <main class="profile-main">
+        <section class="profile-info">
             <h2>Welcome, {{ current_user.username }}!</h2>
-            <p>Email: {{ current_user.email }}</p>
+            <div class="profile-details">
+                <p><strong>Email:</strong> {{ current_user.email }}</p>
+                <!-- Add more user information as needed -->
+            </div>
             <a href="logout" class="btn">Logout</a>
-            <!-- Add more user information as needed -->
         </section>
-
-
-        <!-- Add any additional sections or content here -->
     </main>
 
     <footer>
