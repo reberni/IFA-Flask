@@ -17,10 +17,8 @@
         <br />
         <nav>
             <ul>
-                <li><a href="#">Home</a></li>
+                <li><a href="/">Home</a></li>
                 <li><a href="products">Products</a></li>
-                <li><a href="#">About Us</a></li>
-                <li><a href="#">Contact</a></li>
                 {% if current_user.is_authenticated %}
                 <li><a href="profile"><img class="profile-image" src="{{url_for('static', filename='img/profile_icon.png')}}" alt="Profile"></a></li>
                 <li><a href="newproduct">+ New Product</a></li>

@@ -1,7 +1,7 @@
 from flask_login import UserMixin
 
 def userModel(dbmodel):
-    class User(UserMixin, dbmodel):
+    class Userstate(UserMixin, dbmodel):
         # Implement necessary methods required by Flask-Login
 
         def is_authenticated(self):
@@ -23,4 +23,4 @@ def userModel(dbmodel):
         # Optionally, you can override the __repr__ method for better representation
         def __repr__(self):
             return f'<User {self.username}>'
-    return User
+    return Userstate

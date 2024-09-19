@@ -6,7 +6,8 @@ from flask import Flask, render_template, redirect, url_for, flash, jsonify
 #Database
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
-from utils.db.model import createDatabase
+
+from typing import List
 
 #signin/signup
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -18,6 +19,8 @@ from utils.sessionhandle.signin import BuildSignInForm
 #products
 from utils.product.productform import ProductForm
 from utils.product.productModel import productModel
+
+from sqlalchemy.ext.declarative import declarative_base
 
 #local
 #from utils.user.usermodel import User
@@ -32,20 +35,51 @@ class Base(DeclarativeBase):
 
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("MYSQL")
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://reberni:asdf1234@localhost:3306/photographyequipment" #os.getenv("MYSQL")
 app.config['SECRET_KEY'] = 'your_secret_key' 
 db = SQLAlchemy(app)
-createDatabase(db, app)
+
+
+
+Base = declarative_base()
+
+class Userdata(db.Model):
+    __tablename__ = 'userdata'
+    id = db.mapped_column(db.Integer, primary_key=True)
+    username = db.mapped_column(db.String(50), unique=True)
+    email = db.mapped_column(db.String(120))
+    password = db.mapped_column(db.String(500), nullable=False)
+    active = db.mapped_column(db.Boolean, default=True)
+    # One-to-Many relationship with Products
+    ownedproducts: Mapped[List["Product"]] = db.relationship(back_populates="creator")
+
+class Product(db.Model):
+    __tablename__ = 'product'
+    id = db.Column(db.Integer, primary_key=True)
+    productname = db.mapped_column(db.String(50), unique=False)
+    productdescription = db.mapped_column(db.String(500), unique=False)
+    productprice = db.mapped_column(db.Integer, unique=False)
+    productbrand = db.mapped_column(db.String(50), unique=False)
+    # Foreign Key to link with User
+    creator_id: Mapped[int] = mapped_column(db.ForeignKey("userdata.id"))
+    # Relationship to User
+    creator: Mapped["Userdata"] = db.relationship(back_populates="ownedproducts")
+
+
+
+with app.app_context():
+    db.create_all()
+
 
 
 
 login_manager = LoginManager(app)
-User = userModel(db.Model)
+User = userModel(Userdata)
 @login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
+def load_user(User_id):
+    return User.query.get(int(User_id))
 
-Products = productModel(db.Model)
+#Products = productModel(db.Model)
 
 
 # Define a simple sign-in form using Flask-WTF
@@ -81,11 +115,16 @@ def signin():
 
         # Retrieve the user from the database based on the username
         user = User.query.filter_by(username=username).first()
-
+        print(user)
         # Check if the user exists and the password is correct
         if user and check_password_hash(user.password, password):
             # Log in the user
-            login_user(user)
+            print("if")
+            print(user.password)
+            print (password)
+            login = login_user(user)
+            print(login)
+            print(User)
             flash('Login successful!', 'success')
             return redirect(url_for('index'))  # Redirect to the homepage
 
@@ -111,11 +150,11 @@ def profile():
 @app.route('/products')
 def products():
     # Fetch all products and their related creator
-    all_products = Products.query.all()
+    all_products = Product.query.all()
     print(all_products)
     # You can now access the creator through the relationship
     for product in all_products:
-        print(f"Product: {product.productname}, Creator: {product.creator.username}")
+        print(f"Product: {product.productname}, Creator: {product}")
     
     return render_template('products.html', products=all_products)
 
@@ -127,12 +166,12 @@ def create_product():
 
     if form.validate_on_submit():
         # Create a new product object
-        new_product = Products(
+        new_product = Product(
             productname=form.productname.data,
             productdescription=form.productdescription.data,
             productprice=form.productprice.data,
             productbrand=form.productbrand.data,
-            productcreator_id=current_user.id # Link the current user as the creator
+            creator_id=current_user.id # Link the current user as the creator
         )
         # Add the new product to the database
         db.session.add(new_product)
@@ -146,7 +185,7 @@ def create_product():
 @app.route('/api/products', methods=['GET'])
 def get_products():
     # Fetch all products from the database
-    all_products = Products.query.all()
+    all_products = Product.query.all()
     
     # Serialize the products data into a list of dictionaries
     products_list = [
@@ -156,8 +195,8 @@ def get_products():
             'description': product.productdescription,
             'price': product.productprice,
             'brand': product.productbrand,
-            'creatorID': product.productcreator,
-            #'creatorUsername' :product.creator.username  # Assuming this field exists
+            #'creatorID': product.productcreator,
+            'creatorUsername' :product.creator.username  # Assuming this field exists
         } for product in all_products
     ]
     
@@ -167,7 +206,7 @@ def get_products():
 @app.route('/')
 def index():
     # Fetch all products from the database
-    all_products = Products.query.all()
+    all_products = Product.query.all()
     
     # Render the template and pass the product data
     return render_template('index.html', products=all_products)

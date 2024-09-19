@@ -6,8 +6,25 @@
     <title>Sign In 1</title>
     <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
 </head>
+<header>
+    <h1>Photography Equipment Store</h1>
+    <h3>by @nkrvisuals</h3>
+    <br />
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="products">Products</a></li>
+            {% if current_user.is_authenticated %}
+            <li><a href="profile"><img class="profile-image" src="{{url_for('static', filename='img/profile_icon.png')}}" alt="Profile"></a></li>
+            <li><a href="newproduct">+ New Product</a></li>
+            {% else %}©
+            <li><a href="signin">Sign In</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</header>
 <body>
-    <h1>Sign In 1</h1>
+    <h1>Sign In</h1>
     <form method="POST" action="{{ url_for('signin') }}">
         {{ form.hidden_tag() }}
         <p>
@@ -25,6 +42,9 @@
             {% endfor %}
         </p>
         <p>{{ form.submit() }}</p>
+        <a href="signup">Register</a>
     </form>
+   
+
 </body>
 </html>
